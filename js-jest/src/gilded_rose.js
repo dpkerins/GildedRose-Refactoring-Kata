@@ -34,7 +34,13 @@ class Shop {
         if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
           item.quality --;
         }
+        if (item.name == 'Conjured Mana Cake') {
+          item.quality --;
+        }
         if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert' && item.sellIn < 1) {
+          item.quality --;
+        }
+        if (item.name == 'Conjured Mana Cake' && item.sellIn < 1) {
           item.quality --;
         }
         if (item.quality > 50) {
@@ -46,7 +52,6 @@ class Shop {
         item.sellIn --;
       }
     })
-
     return this.items;
   }
 }

@@ -85,6 +85,18 @@ describe("Gilded Rose", function() {
       })
     })
     
+    describe("Conjured", () => {
+      it("should decrease quality by 2", () => {
+        const gildedRose = new Shop([new Item("Conjured Mana Cake", 5, 50)]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).toBe(48);
+      })
+      it("should decrease quality by 4", () => {
+        const gildedRose = new Shop([new Item("Conjured Mana Cake", 0, 50)]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).toBe(46);
+      })
+    })
     
   })
 });
