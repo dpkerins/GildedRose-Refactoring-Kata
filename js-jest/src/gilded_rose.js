@@ -23,7 +23,7 @@ class Shop {
       
       const isQualityOver50 = item.quality > 50;
       const isQualityUnder0 = item.quality < 0;
-      if (isQualityOver50) { item.quality = 50 }
+      if (isQualityOver50 & !isSulfuras) { item.quality = 50 }
       if (isQualityUnder0) { item.quality = 0 }
       this.getNewSellIn(item);
     })

@@ -60,6 +60,11 @@ describe("Gilded Rose", function() {
         const items = gildedRose.updateQuality();
         expect(items[0].sellIn).toBe(5);
       })
+      it("should not change quality even when above 50", () => {
+        const gildedRose = new Shop([new Item("Sulfuras, Hand of Ragnaros", 5, 80)]);
+        const items = gildedRose.updateQuality();
+        expect(items[0].quality).toBe(80);
+      })
     })
 
     describe("Backstage Passes", () => {
