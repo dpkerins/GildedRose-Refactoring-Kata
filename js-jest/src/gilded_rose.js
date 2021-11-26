@@ -12,35 +12,37 @@ class Shop {
   }
   updateQuality() {
     this.items.forEach(item => {
-      if (item.name != 'Sulfuras, Hand of Ragnaros') {
-        if (item.name == 'Aged Brie') {
+      const isSulfuras = item.name == "Sulfuras, Hand of Ragnaros";
+      const isAgedBrie = item.name == "Aged Brie";
+      const isBackstagePass = item.name == 'Backstage passes to a TAFKAL80ETC concert';
+      const isPastSellIn = item.sellIn < 1;
+      const isConjured = item.name == "Conjured Mana Cake";
+      if (!isSulfuras) {
+        if (isAgedBrie || isBackstagePass) {
           item.quality ++;
         }
-        if (item.name == 'Aged Brie' && item.sellIn < 1) {
+        if (isAgedBrie && isPastSellIn) {
           item.quality ++;
         }
-        if (item.name == 'Backstage passes to a TAFKAL80ETC concert') {
+        if (isBackstagePass && item.sellIn < 11) {
           item.quality++;
         }
-        if (item.name == 'Backstage passes to a TAFKAL80ETC concert' && item.sellIn < 11) {
+        if (isBackstagePass && item.sellIn < 6) {
           item.quality++;
         }
-        if (item.name == 'Backstage passes to a TAFKAL80ETC concert' && item.sellIn < 6) {
-          item.quality++;
-        }
-        if (item.name == 'Backstage passes to a TAFKAL80ETC concert' && item.sellIn < 1) {
+        if (isBackstagePass && isPastSellIn) {
           item.quality = 0;
         }
-        if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
+        if (!isAgedBrie && !isBackstagePass) {
           item.quality --;
         }
-        if (item.name == 'Conjured Mana Cake') {
+        if (isConjured) {
           item.quality --;
         }
-        if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert' && item.sellIn < 1) {
+        if (!isAgedBrie && !isBackstagePass && isPastSellIn) {
           item.quality --;
         }
-        if (item.name == 'Conjured Mana Cake' && item.sellIn < 1) {
+        if (isConjured && isPastSellIn) {
           item.quality --;
         }
         if (item.quality > 50) {
