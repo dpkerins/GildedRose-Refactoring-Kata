@@ -15,36 +15,27 @@ class Shop {
       const isSulfuras = item.name == "Sulfuras, Hand of Ragnaros";
       const isAgedBrie = item.name == "Aged Brie";
       const isBackstagePass = item.name == 'Backstage passes to a TAFKAL80ETC concert';
-      const isPastSellIn = item.sellIn < 1;
       const isConjured = item.name == "Conjured Mana Cake";
-      if (isAgedBrie) {
-        item.quality ++;
-      }
-      if (isAgedBrie && isPastSellIn) {
-        item.quality ++;
-      }
+      if (isAgedBrie) { item.quality = this.calcAgedBrieQuality(item) };
       if (isBackstagePass) { item.quality = this.calcBackstageQuality(item) };
-      if (!isAgedBrie && !isBackstagePass && !isSulfuras) {
-        item.quality --;
-      }
-      if (isConjured) {
-        item.quality --;
-      }
-      if (!isAgedBrie && !isBackstagePass && !isSulfuras && isPastSellIn) {
-        item.quality --;
-      }
-      if (isConjured && isPastSellIn) {
-        item.quality --;
-      }
-      if (item.quality > 50) {
-        item.quality = 50;
-      }
-      if (item.quality < 0) {
-        item.quality = 0;
-      }
+      if (!isAgedBrie && !isBackstagePass && !isSulfuras && !isConjured) { item.quality = this.calcRegularItemQuality(item) };
+      if (isConjured) { item.quality = this.calcConjuredQuality(item) };
+      
+
+      const isQualityOver50 = item.quality > 50;
+      const isQualityUnder0 = item.quality < 0;
+      if (isQualityOver50) { item.quality = 50 };
+      if (isQualityUnder0) { item.quality = 0 };
       if (!isSulfuras) { item.sellIn-- };
     })
     return this.items;
+  }
+
+  calcRegularItemQuality(item) {
+    const isPastSellIn = item.sellIn < 1;
+
+    if (isPastSellIn) { return item.quality -= 2 };
+    return item.quality -= 1;
   }
 
   calcBackstageQuality(item) {
@@ -56,6 +47,20 @@ class Shop {
     if (isFiveDaysFromSellin) { return item.quality += 3 };
     if (isTenDaysFromSellin) { return item.quality += 2 };
     return item.quality += 1;
+  }
+
+  calcAgedBrieQuality(item) {
+    const isPastSellIn = item.sellIn < 1;
+
+    if (isPastSellIn) { return item.quality += 2 };
+    return item.quality += 1;
+  }
+
+  calcConjuredQuality(item) {
+    const isPastSellIn = item.sellIn < 1;
+
+    if (isPastSellIn) { return item.quality -= 4 };
+    return item.quality -= 2;
   }
 }
 
