@@ -17,21 +17,13 @@ class Shop {
       const isBackstagePass = item.name == 'Backstage passes to a TAFKAL80ETC concert';
       const isPastSellIn = item.sellIn < 1;
       const isConjured = item.name == "Conjured Mana Cake";
-      if (isAgedBrie || isBackstagePass) {
+      if (isAgedBrie) {
         item.quality ++;
       }
       if (isAgedBrie && isPastSellIn) {
         item.quality ++;
       }
-      if (isBackstagePass && item.sellIn < 11) {
-        item.quality++;
-      }
-      if (isBackstagePass && item.sellIn < 6) {
-        item.quality++;
-      }
-      if (isBackstagePass && isPastSellIn) {
-        item.quality = 0;
-      }
+      if (isBackstagePass) { item.quality = this.calcBackstageQuality(item) };
       if (!isAgedBrie && !isBackstagePass && !isSulfuras) {
         item.quality --;
       }
@@ -53,6 +45,17 @@ class Shop {
       if (!isSulfuras) { item.sellIn-- };
     })
     return this.items;
+  }
+
+  calcBackstageQuality(item) {
+    const isPastSellIn = item.sellIn < 1;
+    const isFiveDaysFromSellin = item.sellIn < 6;
+    const isTenDaysFromSellin = item.sellIn < 11;
+
+    if (isPastSellIn) { return 0 };
+    if (isFiveDaysFromSellin) { return item.quality += 3 };
+    if (isTenDaysFromSellin) { return item.quality += 2 };
+    return item.quality += 1;
   }
 }
 
